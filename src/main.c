@@ -9,11 +9,17 @@
  *
  */
 
-#include <stdio.h>
+#include <zephyr/kernel.h>
+
+#include "drivers/display.h"
 
 int main(void)
 {
-    printf("Hello World\n");
+    display_init();
+
+    add_string("Hello World!\n");
+    add_string("This is a Test.");
+    display_print();
 
     return 0;
 }

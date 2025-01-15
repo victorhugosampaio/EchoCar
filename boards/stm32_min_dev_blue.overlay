@@ -1,0 +1,22 @@
+&spi1 {
+    status = "okay";
+    cs-gpios = <&gpioa 4 GPIO_ACTIVE_LOW>; /* CS Pin A4 */
+
+	ssd1306: ssd1306@0 {
+		compatible = "solomon,ssd1306fb";
+		reg = <0>;
+
+		data_cmd-gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>; /* DC Pin B0 */
+		segment-offset = <0>;
+		page-offset = <0>;
+		display-offset = <0>;
+		multiplex-ratio = <63>;
+		segment-remap;
+		com-invdir;
+		prechargep = <0x22>;
+		reset-gpios = <&gpiob 1 GPIO_ACTIVE_LOW>; /* RES Pin B1 */
+		height = <64>;
+		width = <128>;
+		spi-max-frequency = <8000000>;
+	};
+};
