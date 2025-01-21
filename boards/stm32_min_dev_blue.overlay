@@ -20,3 +20,14 @@
 		spi-max-frequency = <8000000>;
 	};
 };
+
+&timers2 {
+	status = "okay";
+	st,prescaler = <1000>;
+
+	l293d: pwm {
+		status = "okay";
+		pinctrl-0 = <&tim2_ch1_pwm_out_pa0 &tim2_ch2_pwm_out_pa1 &tim2_ch3_pwm_out_pa2 &tim2_ch4_pwm_out_pa3>;
+		pinctrl-names = "default";
+	};
+};

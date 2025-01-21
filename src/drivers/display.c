@@ -18,8 +18,8 @@
 #include <errno.h>
 #include <stdint.h>
 #include <zephyr/device.h>
-#include <zephyr/kernel.h>
 #include <zephyr/drivers/display.h>
+#include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
 /**
@@ -187,12 +187,12 @@ static const uint8_t font[91 * CHAR_WIDTH] = {
 
 int display_init(void) {
     if (display == NULL) {
-        LOG_ERR("device pointer is NULL");
+        LOG_ERR("display pointer is NULL");
         return -EFAULT;
     }
 
-    if (!device_is_ready(display) ) {
-        LOG_ERR("display device is not ready");
+    if (!device_is_ready(display)) {
+        LOG_ERR("display is not ready");
         return -EBUSY;
     }
 

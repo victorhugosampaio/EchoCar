@@ -7,4 +7,5 @@ target_sources(app PRIVATE
         src/main.c
 
         src/drivers/display.c
+        src/drivers/motor.c
 )
