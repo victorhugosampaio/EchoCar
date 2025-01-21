@@ -1,5 +1,5 @@
 /**
-* @file motor.c
+ * @file motor.c
  * @author victorhugosampaio
  * @brief L293D motor driver.
  * @version 0.1
@@ -19,6 +19,8 @@
 #include <zephyr/kernel.h>
 #include <zephyr/logging/log.h>
 
+LOG_MODULE_REGISTER(motor);
+
 /**
  * @brief PWM frequency, in Hz.
  */
@@ -29,8 +31,6 @@
  */
 #define PWM_PERIOD (1000000 / PWM_FREQUENCY)
 
-LOG_MODULE_REGISTER(motor);
-
 /**
  * @brief Set the PWM percentage for a channel.
  *
@@ -39,9 +39,13 @@ LOG_MODULE_REGISTER(motor);
  */
 static int set_ch_pwm(uint8_t ch, uint8_t percentage);
 
+/**
+ * @brief Container that holds the motor device.
+ */
 static const struct device *motor = DEVICE_DT_GET(DT_NODELABEL(l293d));
 
-int motor_init(void) {
+int motor_init(void)
+{
     if (motor == NULL) {
         LOG_ERR("motor pointer is NULL");
         return -EFAULT;
@@ -55,7 +59,8 @@ int motor_init(void) {
     return 0;
 }
 
-static int set_ch_pwm(uint8_t ch, uint8_t percentage) {
+static int set_ch_pwm(uint8_t ch, uint8_t percentage)
+{
     if (ch < 1 || ch > 4 || percentage < 0 || percentage > 100) {
         return -EINVAL;
     }

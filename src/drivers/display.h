@@ -1,5 +1,5 @@
 /**
-* @file display.h
+ * @file display.h
  * @author victorhugosampaio
  * @brief SSD1306 display driver.
  * @version 0.1
@@ -8,7 +8,6 @@
  * @copyright Copyright (c) 2025
  *
  */
-
 
 #ifndef DISPLAY_H
 #define DISPLAY_H

@@ -1,5 +1,5 @@
 /**
-* @file motor.h
+ * @file motor.h
  * @author victorhugosampaio
  * @brief L293D display driver.
  * @version 0.1
@@ -16,4 +16,4 @@
  */
 int motor_init(void);
 
-#endif //MOTOR_H
+#endif /* MOTOR_H */
