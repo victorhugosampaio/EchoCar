@@ -11,8 +11,9 @@
 
 #include <zephyr/kernel.h>
 
-#include "drivers/display.h"
-#include "drivers/motor.h"
+#include "driver/display.h"
+#include "driver/motor.h"
+#include "infra/car_handler.h"
 
 int main(void)
 {
@@ -21,7 +22,20 @@ int main(void)
 
     add_string("Hello World!\n");
     add_string("This is a Test.");
+
+    add_string("Moving car...");
     display_print();
+
+    k_msleep(2000);
+
+    for (enum car_direction dir = STANDBY; dir <= RIGHT; dir++) {
+        add_string("Direction:\n");
+        add_string((char)dir);
+        display_print();
+
+        move_car(dir);
+        k_msleep(2000);
+    }
 
     return 0;
 }

@@ -20,7 +20,7 @@ int display_init(void);
 /**
  * @brief Add a string to the display buffer.
  */
-void add_string(char *str);
+void add_string(const char *str);
 
 /**
  * @brief Print the display buffer.
