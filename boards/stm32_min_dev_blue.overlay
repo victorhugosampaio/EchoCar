@@ -9,14 +9,14 @@
 };
 
 &spi1 {
-    status = "okay";
-    cs-gpios = <&gpioa 4 GPIO_ACTIVE_LOW>; /* CS Pin A4 */
+	status = "okay";
+	cs-gpios = <&gpioa 4 GPIO_ACTIVE_LOW>; /* CS Pin A4 */
 
 	ssd1306: ssd1306@0 {
 		compatible = "solomon,ssd1306fb";
 		reg = <0>;
 
-		data_cmd-gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>; /* DC Pin B0 */
+		data-cmd-gpios = <&gpiob 0 GPIO_ACTIVE_HIGH>; /* DC Pin B0 */
 		segment-offset = <0>;
 		page-offset = <0>;
 		display-offset = <0>;
