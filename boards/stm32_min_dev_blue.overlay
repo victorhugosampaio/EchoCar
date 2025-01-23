@@ -1,10 +1,10 @@
 / {
 	zephyr,user {
-		pwm-names = "in_a", "in_b", "in_c", "in_d";
-		pwms = <&in_a 1 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
-			   <&in_b 2 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
-			   <&in_c 3 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
-			   <&in_d 4 PWM_KHZ(20) PWM_POLARITY_NORMAL>;
+		pwm-names = "in_1", "in_2", "in_3", "in_4";
+		pwms = <&in_1 1 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
+			   <&in_2 2 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
+			   <&in_3 3 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
+			   <&in_4 4 PWM_KHZ(20) PWM_POLARITY_NORMAL>;
 	};
 };
 
@@ -34,7 +34,7 @@
 &timers2 {
 	status = "okay";
 
-	in_a: pwm1 {
+	in_1: pwm1 {
 		status = "okay";
 		#pwm-cells = <3>;
 		compatible = "st,stm32-pwm";
@@ -42,7 +42,7 @@
 		pinctrl-names = "default";
 	};
 
-	in_b: pwm2 {
+	in_2: pwm2 {
 		status = "okay";
 		#pwm-cells = <3>;
 		compatible = "st,stm32-pwm";
@@ -50,7 +50,7 @@
 		pinctrl-names = "default";
 	};
 
-	in_c: pwm3 {
+	in_3: pwm3 {
 		status = "okay";
 		#pwm-cells = <3>;
 		compatible = "st,stm32-pwm";
@@ -58,7 +58,7 @@
 		pinctrl-names = "default";
 	};
 
-	in_d: pwm4 {
+	in_4: pwm4 {
 		status = "okay";
 		#pwm-cells = <3>;
 		compatible = "st,stm32-pwm";
