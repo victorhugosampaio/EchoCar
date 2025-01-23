@@ -201,7 +201,7 @@ int display_init(void)
     return 0;
 }
 
-void add_string(char *str)
+void add_string(const char *str)
 {
     uint8_t idx = 0;
 
@@ -233,10 +233,10 @@ int display_print(void)
     return 0;
 }
 
-static void add_char(char c)
+static void add_char(const char c)
 {
-    uint8_t index = c - ' ';
-    uint16_t start = index * CHAR_WIDTH;
+    const uint8_t index = c - ' ';
+    const uint16_t start = index * CHAR_WIDTH;
 
     if (buf_idx >= DISPLAY_MAX_BUFFER_SIZE) {
         return;
