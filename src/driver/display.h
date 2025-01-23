@@ -22,7 +22,7 @@ int display_init(void);
 /**
  * @brief Add a string to the display buffer.
  */
-void add_string(const char *str);
+void display_add_string(const char *str);
 
 /**
  * @brief Print the display buffer.
