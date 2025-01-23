@@ -14,6 +14,8 @@
 
 /**
  * @brief Initialize display driver.
+ *
+ * @return 0 on success, a negative integer on failure.
  */
 int display_init(void);
 
@@ -24,6 +26,8 @@ void add_string(const char *str);
 
 /**
  * @brief Print the display buffer.
+ *
+ * @return 0 on success, a negative integer on failure.
  */
 int display_print(void);
 

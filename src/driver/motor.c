@@ -22,31 +22,17 @@
 LOG_MODULE_REGISTER(motor);
 
 /**
- * @brief Define the minimum and maximum PWM pulse for each input.
- */
-#define IN_1_MIN_PULSE 0
-#define IN_1_MAX_PULSE 50000
-
-#define IN_2_MIN_PULSE 0
-#define IN_2_MAX_PULSE 50000
-
-#define IN_3_MIN_PULSE 0
-#define IN_3_MAX_PULSE 50000
-
-#define IN_4_MIN_PULSE 0
-#define IN_4_MAX_PULSE 50000
-
-/**
  * @brief Container that holds the PWM devices.
  */
-struct pwm_dt_spec in_1 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_1);
-struct pwm_dt_spec in_2 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_2);
-struct pwm_dt_spec in_3 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_3);
-struct pwm_dt_spec in_4 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_4);
+static const struct pwm_dt_spec in_1 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_1);
+static const struct pwm_dt_spec in_2 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_2);
+static const struct pwm_dt_spec in_3 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_3);
+static const struct pwm_dt_spec in_4 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_4);
 
 int motor_init(void)
 {
     if (!pwm_is_ready_dt(&in_1) || !pwm_is_ready_dt(&in_2) || !pwm_is_ready_dt(&in_3) || !pwm_is_ready_dt(&in_4)) {
+        LOG_ERR("motor is not ready");
         return -EBUSY;
     }
 
@@ -64,19 +50,19 @@ void motor_input_set(const enum motor_input input, const bool value)
 
     switch (input) {
     case IN_1:
-        pulse = value ? IN_1_MAX_PULSE : IN_1_MIN_PULSE;
+        pulse = value ? CONFIG_IN_1_MAX_PULSE : CONFIG_IN_1_MIN_PULSE;
         pwm_set_pulse_dt(&in_1, pulse);
         break;
     case IN_2:
-        pulse = value ? IN_2_MAX_PULSE : IN_2_MIN_PULSE;
+        pulse = value ? CONFIG_IN_2_MAX_PULSE : CONFIG_IN_2_MIN_PULSE;
         pwm_set_pulse_dt(&in_2, pulse);
         break;
     case IN_3:
-        pulse = value ? IN_3_MAX_PULSE : IN_3_MIN_PULSE;
+        pulse = value ? CONFIG_IN_3_MAX_PULSE : CONFIG_IN_3_MIN_PULSE;
         pwm_set_pulse_dt(&in_3, pulse);
         break;
     case IN_4:
-        pulse = value ? IN_4_MAX_PULSE : IN_4_MIN_PULSE;
+        pulse = value ? CONFIG_IN_4_MAX_PULSE : CONFIG_IN_4_MIN_PULSE;
         pwm_set_pulse_dt(&in_4, pulse);
         break;
     }

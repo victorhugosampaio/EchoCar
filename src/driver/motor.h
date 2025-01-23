@@ -8,6 +8,7 @@
  * @copyright Copyright (c) 2025
  *
  */
+
 #ifndef MOTOR_H
 #define MOTOR_H
 
@@ -25,6 +26,8 @@ enum motor_input {
 
 /**
  * @brief Initialize the motor driver.
+ *
+ * @return 0 on success, a negative integer on failure.
  */
 int motor_init(void);
 

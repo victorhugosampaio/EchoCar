@@ -1,0 +1,74 @@
+menu "EchoCar"
+
+    menu "Display"
+        config DISPLAY_WIDTH
+            int "Size of the display width."
+            default 128
+
+        config DISPLAY_HEIGHT
+            int "Size of the display height."
+            default 64
+
+        menu "Font"
+            config FONT_CHAR_WIDTH
+                int "Size of the font char width."
+                default 8
+
+            config FONT_CHAR_HEIGHT
+                int "Size of the font char height."
+                default 8
+
+        endmenu
+
+    endmenu
+
+    menu "Motors"
+        menu "Input 1"
+            config IN_1_MIN_PULSE
+                int "Minimum PWM pulse for input 1."
+                default 0
+
+            config IN_1_MAX_PULSE
+                int "Maximum PWM pulse for input 1."
+                default 50000
+
+        endmenu
+
+        menu "Input 2"
+            config IN_2_MIN_PULSE
+                int "Minimum PWM pulse for input 2."
+                default 0
+
+            config IN_2_MAX_PULSE
+                int "Maximum PWM pulse for input 2."
+                default 50000
+
+        endmenu
+
+        menu "Input 3"
+            config IN_3_MIN_PULSE
+                int "Minimum PWM pulse for input 3."
+                default 0
+
+            config IN_3_MAX_PULSE
+                int "Maximum PWM pulse for input 3."
+                default 50000
+
+        endmenu
+
+        menu "Input 4"
+            config IN_4_MIN_PULSE
+                int "Minimum PWM pulse for input 4."
+                default 0
+
+            config IN_4_MAX_PULSE
+                int "Maximum PWM pulse for input 4."
+                default 50000
+
+        endmenu
+
+    endmenu
+
+endmenu
+
+source "Kconfig.zephyr"

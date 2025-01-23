@@ -24,26 +24,14 @@
 LOG_MODULE_REGISTER(display);
 
 /**
- * @brief OLED display specs.
- */
-#define DISPLAY_WIDTH 128
-#define DISPLAY_HEIGHT 64
-
-/**
  * @brief Display maximum buffer size.
  */
-#define DISPLAY_MAX_BUFFER_SIZE DISPLAY_WIDTH *DISPLAY_HEIGHT
-
-/**
- * @brief Font char size.
- */
-#define CHAR_WIDTH 8
-#define CHAR_HEIGHT 8
+#define DISPLAY_MAX_BUFFER_SIZE CONFIG_DISPLAY_WIDTH * CONFIG_DISPLAY_HEIGHT
 
 /**
  * @brief String maximum width.
  */
-#define STRING_MAX_WIDTH DISPLAY_WIDTH / CHAR_WIDTH
+#define STRING_MAX_WIDTH (CONFIG_DISPLAY_WIDTH / CONFIG_FONT_CHAR_WIDTH)
 
 /**
  * @brief Add a char to the display buffer.
@@ -76,16 +64,16 @@ static uint16_t buf_idx;
  * @brief Container that holds the display buffer params.
  */
 static struct display_buffer_descriptor display_buf_desc = {
-    .width = DISPLAY_WIDTH,
-    .height = DISPLAY_HEIGHT,
+    .width = CONFIG_DISPLAY_WIDTH,
+    .height = CONFIG_DISPLAY_HEIGHT,
     .buf_size = DISPLAY_MAX_BUFFER_SIZE,
-    .pitch = DISPLAY_WIDTH,
+    .pitch = CONFIG_DISPLAY_WIDTH,
 };
 
 /**
  * @brief 8x8 font.
  */
-static const uint8_t font[91 * CHAR_WIDTH] = {
+static const uint8_t font[91 * CONFIG_FONT_CHAR_WIDTH] = {
     0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x00, // <space>
     0x00, 0x00, 0x06, 0x5f, 0x5f, 0x06, 0x00, 0x00, // !
     0x00, 0x03, 0x07, 0x00, 0x00, 0x07, 0x03, 0x00, // "
@@ -207,7 +195,7 @@ void add_string(const char *str)
 
     for (uint8_t pos = 0; str[pos] != '\0'; pos++) {
         if (str[pos] == '\n') {
-            buf_idx += CHAR_WIDTH * (STRING_MAX_WIDTH - idx);
+            buf_idx += CONFIG_FONT_CHAR_WIDTH * (STRING_MAX_WIDTH - idx);
             idx = 0;
             continue;
         }
@@ -236,13 +224,13 @@ int display_print(void)
 static void add_char(const char c)
 {
     const uint8_t index = c - ' ';
-    const uint16_t start = index * CHAR_WIDTH;
+    const uint16_t start = index * CONFIG_FONT_CHAR_WIDTH;
 
     if (buf_idx >= DISPLAY_MAX_BUFFER_SIZE) {
         return;
     }
 
-    for (uint8_t i = 0; i < CHAR_WIDTH; i++) {
+    for (uint8_t i = 0; i < CONFIG_FONT_CHAR_WIDTH; i++) {
         display_buf[buf_idx] = font[start + i];
         buf_idx++;
     }
