@@ -40,16 +40,16 @@ void move_car(const enum car_direction direction)
         motor_input_set(IN_4, 1);
         break;
     case LEFT:
-        motor_input_set(IN_1, 1);
-        motor_input_set(IN_2, 0);
-        motor_input_set(IN_3, 0);
-        motor_input_set(IN_4, 1);
-        break;
-    case RIGHT:
         motor_input_set(IN_1, 0);
         motor_input_set(IN_2, 1);
         motor_input_set(IN_3, 1);
         motor_input_set(IN_4, 0);
+        break;
+    case RIGHT:
+        motor_input_set(IN_1, 1);
+        motor_input_set(IN_2, 0);
+        motor_input_set(IN_3, 0);
+        motor_input_set(IN_4, 1);
         break;
     }
 }

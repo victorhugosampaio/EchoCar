@@ -22,16 +22,6 @@
 LOG_MODULE_REGISTER(motor);
 
 /**
- * @brief PWM frequency, in KHz.
- */
-#define PWM_FREQUENCY 20
-
-/**
- * @brief PWM period, in nanoseconds.
- */
-#define PWM_PERIOD (1000000000 / PWM_KHZ(PWM_FREQUENCY))
-
-/**
  * @brief Define the minimum and maximum PWM pulse for each input.
  */
 #define IN_1_MIN_PULSE 0
@@ -47,50 +37,47 @@ LOG_MODULE_REGISTER(motor);
 #define IN_4_MAX_PULSE 50000
 
 /**
- * @brief Container that holds the motor device.
+ * @brief Container that holds the PWM devices.
  */
-static const struct device *motor = DEVICE_DT_GET(DT_NODELABEL(l293d));
+struct pwm_dt_spec input_1 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_a);
+struct pwm_dt_spec input_2 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_b);
+struct pwm_dt_spec input_3 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_c);
+struct pwm_dt_spec input_4 = PWM_DT_SPEC_GET_BY_NAME(DT_PATH(zephyr_user), in_d);
 
 int motor_init(void)
 {
-    if (motor == NULL) {
-        LOG_ERR("motor pointer is NULL");
-        return -EFAULT;
-    }
-
-    if (!device_is_ready(motor)) {
-        LOG_ERR("motor is not ready");
+    if (!pwm_is_ready_dt(&input_1) || !pwm_is_ready_dt(&input_2) || !pwm_is_ready_dt(&input_3) || !pwm_is_ready_dt(&input_4)) {
         return -EBUSY;
     }
+
+    motor_input_set(IN_1, 0);
+    motor_input_set(IN_2, 0);
+    motor_input_set(IN_3, 0);
+    motor_input_set(IN_4, 0);
 
     return 0;
 }
 
-int motor_input_set(const enum motor_input input, const bool value)
+void motor_input_set(const enum motor_input input, const bool value)
 {
-    uint16_t pulse = 0;
+    uint32_t pulse = 0;
 
     switch (input) {
     case IN_1:
         pulse = value ? IN_1_MAX_PULSE : IN_1_MIN_PULSE;
+        pwm_set_pulse_dt(&input_1, pulse);
         break;
     case IN_2:
         pulse = value ? IN_2_MAX_PULSE : IN_2_MIN_PULSE;
+        pwm_set_pulse_dt(&input_2, pulse);
         break;
     case IN_3:
         pulse = value ? IN_3_MAX_PULSE : IN_3_MIN_PULSE;
+        pwm_set_pulse_dt(&input_3, pulse);
         break;
     case IN_4:
         pulse = value ? IN_4_MAX_PULSE : IN_4_MIN_PULSE;
+        pwm_set_pulse_dt(&input_4, pulse);
         break;
-    default:
-        return -EINVAL;
     }
-
-    if (pwm_set(motor, input + 1, PWM_PERIOD, pulse, 0) != 0) {
-        LOG_ERR("pwm set failed on channel %d", input);
-        return -EBUSY;
-    }
-
-    return 0;
 }

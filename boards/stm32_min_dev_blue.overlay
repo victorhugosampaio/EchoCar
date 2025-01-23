@@ -1,3 +1,13 @@
+/ {
+	zephyr,user {
+		pwm-names = "in_a", "in_b", "in_c", "in_d";
+		pwms = <&in_a 1 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
+			   <&in_b 2 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
+			   <&in_c 3 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
+			   <&in_d 4 PWM_KHZ(20) PWM_POLARITY_NORMAL>;
+	};
+};
+
 &spi1 {
     status = "okay";
     cs-gpios = <&gpioa 4 GPIO_ACTIVE_LOW>; /* CS Pin A4 */
@@ -23,11 +33,37 @@
 
 &timers2 {
 	status = "okay";
-	st,prescaler = <1000>;
 
-	l293d: pwm {
+	in_a: pwm1 {
 		status = "okay";
-		pinctrl-0 = <&tim2_ch1_pwm_out_pa0 &tim2_ch2_pwm_out_pa1 &tim2_ch3_pwm_out_pa2 &tim2_ch4_pwm_out_pa3>;
+		#pwm-cells = <3>;
+		compatible = "st,stm32-pwm";
+		pinctrl-0 = <&tim2_ch1_pwm_out_pa0>;
 		pinctrl-names = "default";
 	};
+
+	in_b: pwm2 {
+		status = "okay";
+		#pwm-cells = <3>;
+		compatible = "st,stm32-pwm";
+		pinctrl-0 = <&tim2_ch2_pwm_out_pa1>;
+		pinctrl-names = "default";
+	};
+
+	in_c: pwm3 {
+		status = "okay";
+		#pwm-cells = <3>;
+		compatible = "st,stm32-pwm";
+		pinctrl-0 = <&tim2_ch3_pwm_out_pa2>;
+		pinctrl-names = "default";
+	};
+
+	in_d: pwm4 {
+		status = "okay";
+		#pwm-cells = <3>;
+		compatible = "st,stm32-pwm";
+		pinctrl-0 = <&tim2_ch4_pwm_out_pa3>;
+		pinctrl-names = "default";
+	};
+
 };

@@ -34,6 +34,6 @@ int motor_init(void);
  * @param input Motor input.
  * @param value Input value (true for 1 and false for 0).
  */
-int motor_input_set(const enum motor_input input, const bool value);
+void motor_input_set(const enum motor_input input, const bool value);
 
 #endif /* MOTOR_H */

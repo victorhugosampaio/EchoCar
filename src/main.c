@@ -21,21 +21,46 @@ int main(void)
     motor_init();
 
     add_string("Hello World!\n");
-    add_string("This is a Test.");
-
+    add_string("This is a Test.\n");
     add_string("Moving car...");
     display_print();
 
     k_msleep(2000);
 
-    for (enum car_direction dir = STANDBY; dir <= RIGHT; dir++) {
-        add_string("Direction:\n");
-        add_string((char)dir);
-        display_print();
+    add_string("Direction:\n");
+    add_string("STANDBY");
+    display_print();
+    move_car(STANDBY);
+    k_msleep(3000);
 
-        move_car(dir);
-        k_msleep(2000);
-    }
+    add_string("Direction:\n");
+    add_string("FORWARD");
+    display_print();
+    move_car(FORWARD);
+    k_msleep(3000);
+
+    add_string("Direction:\n");
+    add_string("BACKWARD");
+    display_print();
+    move_car(BACKWARD);
+    k_msleep(3000);
+
+    add_string("Direction:\n");
+    add_string("LEFT");
+    display_print();
+    move_car(LEFT);
+    k_msleep(3000);
+
+    add_string("Direction:\n");
+    add_string("RIGHT");
+    display_print();
+    move_car(RIGHT);
+    k_msleep(3000);
+
+    add_string("Direction:\n");
+    add_string("BREAK");
+    display_print();
+    move_car(BREAK);
 
     return 0;
 }
