@@ -6,6 +6,12 @@
 			   <&in_3 3 PWM_KHZ(20) PWM_POLARITY_NORMAL>,
 			   <&in_4 4 PWM_KHZ(20) PWM_POLARITY_NORMAL>;
 	};
+
+	chosen {
+		zephyr,console = &usart3;
+		zephyr,shell-uart = &usart3;
+		zephyr,osdp-uart = &usart3;
+	};
 };
 
 &spi1 {
