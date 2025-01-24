@@ -14,7 +14,6 @@
 #include "driver/motor.h"
 #include "driver/usart.h"
 
-#include <stdio.h>
 #include <zephyr/kernel.h>
 
 /**
