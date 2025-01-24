@@ -8,7 +8,7 @@ menu "EchoCar"
 
             config USART_THREAD_PRIORITY
                 int "Priority of usart thread."
-                default 5
+                default 1
 
         endmenu
 
@@ -19,7 +19,7 @@ menu "EchoCar"
 
             config CAR_HANDLER_THREAD_PRIORITY
                 int "Priority of car handler thread."
-                default 5
+                default 2
 
         endmenu
 

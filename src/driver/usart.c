@@ -29,7 +29,7 @@ static const struct device *usart1 = DEVICE_DT_GET(DT_NODELABEL(usart1));
 /**
  * @brief Usart thread.
  */
-_Noreturn static void usart_thread();
+_Noreturn static void usart_thread(void *unused1, void *unused2, void *unused3);
 
 /**
  * @brief Create the usart thread.
@@ -40,7 +40,7 @@ K_THREAD_DEFINE(usart_thread_id, CONFIG_USART_THREAD_STACK_SIZE, usart_thread,
 /**
  * @brief Holds the received char.
  */
-static unsigned char received = '0';
+static unsigned char received[2];
 
 int usart_init(void)
 {
@@ -57,19 +57,33 @@ int usart_init(void)
     return 0;
 }
 
-char get_char(void)
+unsigned char *get_char(void)
 {
     return received;
 }
 
-_Noreturn static void usart_thread()
+_Noreturn static void usart_thread(void *unused1, void *unused2, void *unused3)
 {
-    while (true) {
-        if (uart_poll_in(usart1, &received) < 0) {
-            LOG_ERR("uart poll failed");
-            k_msleep(500);
+    ARG_UNUSED(unused1);
+    ARG_UNUSED(unused2);
+    ARG_UNUSED(unused3);
+
+    int ret;
+
+    while (1) {
+
+        ret = uart_poll_in(usart1, &received);
+
+        if (ret < 0) {
+
+            if (ret == -1) {
+                received[0] = '0';
+                received[1] = '\0';
+            } else {
+                LOG_ERR("uart poll failed");
+            }
         }
 
-        k_msleep(5);
+        k_sleep(K_MSEC(50));
     }
 }

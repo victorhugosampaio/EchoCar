@@ -16,6 +16,7 @@
  * @brief Enumerate the car directions.
  */
 enum car_direction {
+    WAITING,
     STANDBY,
     BREAK,
     FORWARD,

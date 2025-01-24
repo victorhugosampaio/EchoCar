@@ -73,3 +73,7 @@
 	};
 
 };
+
+&usart2 {
+	status = "disabled";
+};
