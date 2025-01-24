@@ -1,5 +1,30 @@
 menu "EchoCar"
 
+    menu "Threads"
+        menu "usart"
+            config USART_THREAD_STACK_SIZE
+                int "Size of stack for usart thread."
+                default 512
+
+            config USART_THREAD_PRIORITY
+                int "Priority of usart thread."
+                default 1
+
+        endmenu
+
+        menu "Car Handler"
+            config CAR_HANDLER_THREAD_STACK_SIZE
+                int "Size of stack for car handler thread."
+                default 512
+
+            config CAR_HANDLER_THREAD_PRIORITY
+                int "Priority of car handler thread."
+                default 2
+
+        endmenu
+
+    endmenu
+
     menu "Display"
         config DISPLAY_WIDTH
             int "Size of the display width."

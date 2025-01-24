@@ -189,7 +189,7 @@ int display_init(void)
     return 0;
 }
 
-void add_string(const char *str)
+void display_add_string(const char *str)
 {
     uint8_t idx = 0;
 

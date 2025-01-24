@@ -10,6 +10,7 @@ target_sources(app PRIVATE
 
         src/driver/display.c
         src/driver/motor.c
+        src/driver/usart.c
 
         src/infra/car_handler.c
 )

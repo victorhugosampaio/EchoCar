@@ -16,6 +16,7 @@
  * @brief Enumerate the car directions.
  */
 enum car_direction {
+    WAITING,
     STANDBY,
     BREAK,
     FORWARD,
@@ -23,12 +24,5 @@ enum car_direction {
     LEFT,
     RIGHT,
 };
-
-/**
- * @brief Move the car in the desired direction.
- *
- * @param direction Desired direction.
- */
-void move_car(const enum car_direction direction);
 
 #endif /* CAR_HANDLER_H */
