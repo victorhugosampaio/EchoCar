@@ -35,7 +35,6 @@ K_THREAD_DEFINE(car_handler_thread_id, CONFIG_CAR_HANDLER_THREAD_STACK_SIZE, car
                 NULL, NULL, NULL, CONFIG_CAR_HANDLER_THREAD_PRIORITY, K_ESSENTIAL, 0);
 
 static const char *directions[] = {
-    [WAITING] = "WAITING",
     [STANDBY] = "STANDBY",
     [BREAK] = "BREAK",
     [FORWARD] = "FORWARD",
@@ -46,34 +45,34 @@ static const char *directions[] = {
 
 _Noreturn static void car_handler_thread()
 {
-    enum car_direction last_direction = STANDBY;
     uint8_t current_direction = STANDBY;
+    enum car_direction last_direction = current_direction;
 
     while (true) {
         current_direction = get_char()[0] - '0';
 
         switch (current_direction) {
-            case STANDBY:
-            case BREAK:
-            case FORWARD:
-            case BACKWARD:
-            case LEFT:
-            case RIGHT:
-                move_car(current_direction);
-                last_direction = current_direction;
-                display_add_string("Moving:\n");
-                display_add_string(directions[current_direction]);
-                break;
+        case STANDBY:
+        case BREAK:
+        case FORWARD:
+        case BACKWARD:
+        case LEFT:
+        case RIGHT:
+            move_car(current_direction);
+            last_direction = current_direction;
+            display_add_string("Moving:\n");
+            display_add_string(directions[current_direction]);
+            break;
 
-            default:
-                if (last_direction == STANDBY) {
-                    continue;
-                }
+        default:
+            if (last_direction == STANDBY) {
+                continue;
+            }
 
-                last_direction = STANDBY;
-                move_car(STANDBY);
-                display_add_string("Waiting...");
-                break;
+            last_direction = STANDBY;
+            move_car(STANDBY);
+            display_add_string("Waiting...");
+            break;
         }
 
         display_print();
@@ -118,8 +117,6 @@ static void move_car(const enum car_direction direction)
         motor_input_set(IN_2, 0);
         motor_input_set(IN_3, 0);
         motor_input_set(IN_4, 1);
-        break;
-    default:
         break;
     }
 }

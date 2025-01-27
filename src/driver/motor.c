@@ -46,7 +46,7 @@ int motor_init(void)
 
 void motor_input_set(const enum motor_input input, const bool value)
 {
-    uint32_t pulse = 0;
+    uint16_t pulse = 0;
 
     switch (input) {
     case IN_1:

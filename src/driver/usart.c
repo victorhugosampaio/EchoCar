@@ -64,15 +64,15 @@ unsigned char *get_char(void)
 
 _Noreturn static void usart_thread(void *unused1, void *unused2, void *unused3)
 {
+    int ret;
+
     ARG_UNUSED(unused1);
     ARG_UNUSED(unused2);
     ARG_UNUSED(unused3);
 
-    int ret;
-
     while (1) {
 
-        ret = uart_poll_in(usart1, &received);
+        ret = uart_poll_in(usart1, received);
 
         if (ret < 0) {
 
@@ -84,6 +84,6 @@ _Noreturn static void usart_thread(void *unused1, void *unused2, void *unused3)
             }
         }
 
-        k_sleep(K_MSEC(50));
+        k_msleep(100);
     }
 }
