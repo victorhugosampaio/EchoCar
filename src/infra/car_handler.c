@@ -34,6 +34,9 @@ static void move_car(enum car_direction direction);
 K_THREAD_DEFINE(car_handler_thread_id, CONFIG_CAR_HANDLER_THREAD_STACK_SIZE, car_handler_thread,
                 NULL, NULL, NULL, CONFIG_CAR_HANDLER_THREAD_PRIORITY, K_ESSENTIAL, 0);
 
+/**
+ * @brief LUT with the directions strings.
+ */
 static const char *directions[] = {
     [STANDBY] = "STANDBY",
     [BREAK] = "BREAK",
