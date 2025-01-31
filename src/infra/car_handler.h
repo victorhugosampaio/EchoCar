@@ -26,4 +26,24 @@ enum car_direction {
     DIRECTION_QUANTITY,
 };
 
+/**
+ * @brief Enumerate the model predictions.
+ */
+enum prediction {
+    PREDICTION_BACKWARD,
+    PREDICTION_FIVE,
+    PREDICTION_FORWARD,
+    PREDICTION_FOUR,
+    PREDICTION_GO,
+    PREDICTION_LEFT,
+    PREDICTION_NOISE,
+    PREDICTION_ONE,
+    PREDICTION_RIGHT,
+    PREDICTION_STOP,
+    PREDICTION_THREE,
+    PREDICTION_TWO,
+
+    PREDICTION_QUANTITY,
+};
+
 #endif /* CAR_HANDLER_H */

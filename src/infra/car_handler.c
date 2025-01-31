@@ -14,6 +14,7 @@
 #include "driver/motor.h"
 #include "driver/usart.h"
 
+#include <stdlib.h>
 #include <zephyr/kernel.h>
 
 /**
@@ -35,15 +36,21 @@ K_THREAD_DEFINE(car_handler_thread_id, CONFIG_CAR_HANDLER_THREAD_STACK_SIZE, car
                 NULL, NULL, NULL, CONFIG_CAR_HANDLER_THREAD_PRIORITY, K_ESSENTIAL, 0);
 
 /**
- * @brief LUT with the directions strings.
+ * @brief LUT with the predictions strings.
  */
-static const char *directions[DIRECTION_QUANTITY] = {
-    [DIRECTION_STANDBY] = "STANDBY",
-    [DIRECTION_BREAK] = "BREAK",
-    [DIRECTION_FORWARD] = "FORWARD",
-    [DIRECTION_BACKWARD] = "BACKWARD",
-    [DIRECTION_LEFT] = "LEFT",
-    [DIRECTION_RIGHT] = "RIGHT",
+static const char *predictions[PREDICTION_QUANTITY] = {
+    [PREDICTION_BACKWARD] = "Backward",
+    [PREDICTION_FIVE] = "5",
+    [PREDICTION_FORWARD] = "Forward",
+    [PREDICTION_FOUR] = "4",
+    [PREDICTION_GO] = "GO!",
+    [PREDICTION_LEFT] = "Left",
+    [PREDICTION_NOISE] = "Waiting",
+    [PREDICTION_ONE] = "1",
+    [PREDICTION_RIGHT] = "Right",
+    [PREDICTION_STOP] = "STOP!",
+    [PREDICTION_THREE] = "3",
+    [PREDICTION_TWO] = "2",
 };
 
 /**
@@ -60,10 +67,46 @@ static const uint8_t dir_table[DIRECTION_QUANTITY][IN_QUANTITY] = {
 
 _Noreturn static void car_handler_thread()
 {
+    unsigned char *received;
+    uint8_t pred = 0;
+
+    /*
     enum car_direction current_direction = DIRECTION_STANDBY;
     enum car_direction last_direction = current_direction;
+     */
 
     while (true) {
+        received = get_char();
+
+        if (received[1] == '\0') {
+            pred = received[0] - '0';
+        } else {
+            pred = (received[0] - '0') * 10 + (received[1] - '0');
+        }
+
+        switch (pred) {
+            case PREDICTION_BACKWARD:
+            case PREDICTION_FIVE:
+            case PREDICTION_FORWARD:
+            case PREDICTION_FOUR:
+            case PREDICTION_GO:
+            case PREDICTION_LEFT:
+            case PREDICTION_ONE:
+            case PREDICTION_RIGHT:
+            case PREDICTION_STOP:
+            case PREDICTION_THREE:
+            case PREDICTION_TWO:
+                display_add_string(predictions[pred]);
+                display_print();
+                k_msleep(1000);
+                break;
+            default:
+                display_add_string(predictions[PREDICTION_NOISE]);
+                display_print();
+                break;
+        }
+
+        /*
         current_direction = get_char()[0] - '0';
 
         switch (current_direction) {
@@ -91,6 +134,7 @@ _Noreturn static void car_handler_thread()
         }
 
         display_print();
+         */
     }
 }
 
