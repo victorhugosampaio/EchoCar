@@ -65,5 +65,7 @@ void motor_input_set(const enum motor_input input, const bool value)
         pulse = value ? CONFIG_IN_4_MAX_PULSE : CONFIG_IN_4_MIN_PULSE;
         pwm_set_pulse_dt(&in_4, pulse);
         break;
+    default:
+        break;
     }
 }

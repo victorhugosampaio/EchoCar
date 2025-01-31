@@ -16,12 +16,14 @@
  * @brief Enumerate the car directions.
  */
 enum car_direction {
-    STANDBY,
-    BREAK,
-    FORWARD,
-    BACKWARD,
-    LEFT,
-    RIGHT,
+    DIRECTION_STANDBY,
+    DIRECTION_BREAK,
+    DIRECTION_FORWARD,
+    DIRECTION_BACKWARD,
+    DIRECTION_LEFT,
+    DIRECTION_RIGHT,
+
+    DIRECTION_QUANTITY,
 };
 
 #endif /* CAR_HANDLER_H */

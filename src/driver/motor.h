@@ -22,6 +22,8 @@ enum motor_input {
     IN_2,
     IN_3,
     IN_4,
+
+    IN_QUANTITY,
 };
 
 /**

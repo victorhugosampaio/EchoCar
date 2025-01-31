@@ -37,30 +37,42 @@ K_THREAD_DEFINE(car_handler_thread_id, CONFIG_CAR_HANDLER_THREAD_STACK_SIZE, car
 /**
  * @brief LUT with the directions strings.
  */
-static const char *directions[] = {
-    [STANDBY] = "STANDBY",
-    [BREAK] = "BREAK",
-    [FORWARD] = "FORWARD",
-    [BACKWARD] = "BACKWARD",
-    [LEFT] = "LEFT",
-    [RIGHT] = "RIGHT",
+static const char *directions[DIRECTION_QUANTITY] = {
+    [DIRECTION_STANDBY] = "STANDBY",
+    [DIRECTION_BREAK] = "BREAK",
+    [DIRECTION_FORWARD] = "FORWARD",
+    [DIRECTION_BACKWARD] = "BACKWARD",
+    [DIRECTION_LEFT] = "LEFT",
+    [DIRECTION_RIGHT] = "RIGHT",
+};
+
+/**
+ * @brief LUT with the directions inputs.
+ */
+static const uint8_t dir_table[DIRECTION_QUANTITY][IN_QUANTITY] = {
+    [DIRECTION_STANDBY] = {0, 0, 0, 0},
+    [DIRECTION_BREAK] = {1, 1, 1, 1},
+    [DIRECTION_FORWARD] = {1, 0, 1, 0},
+    [DIRECTION_BACKWARD] = {0, 1, 0, 1},
+    [DIRECTION_LEFT] = {0, 1, 1, 0},
+    [DIRECTION_RIGHT] = {1, 0, 0, 1},
 };
 
 _Noreturn static void car_handler_thread()
 {
-    uint8_t current_direction = STANDBY;
+    enum car_direction current_direction = DIRECTION_STANDBY;
     enum car_direction last_direction = current_direction;
 
     while (true) {
         current_direction = get_char()[0] - '0';
 
         switch (current_direction) {
-        case STANDBY:
-        case BREAK:
-        case FORWARD:
-        case BACKWARD:
-        case LEFT:
-        case RIGHT:
+        case DIRECTION_STANDBY:
+        case DIRECTION_BREAK:
+        case DIRECTION_FORWARD:
+        case DIRECTION_BACKWARD:
+        case DIRECTION_LEFT:
+        case DIRECTION_RIGHT:
             move_car(current_direction);
             last_direction = current_direction;
             display_add_string("Moving:\n");
@@ -68,12 +80,12 @@ _Noreturn static void car_handler_thread()
             break;
 
         default:
-            if (last_direction == STANDBY) {
+            if (last_direction == DIRECTION_STANDBY) {
                 continue;
             }
 
-            last_direction = STANDBY;
-            move_car(STANDBY);
+            last_direction = DIRECTION_STANDBY;
+            move_car(DIRECTION_STANDBY);
             display_add_string("Waiting...");
             break;
         }
@@ -84,42 +96,8 @@ _Noreturn static void car_handler_thread()
 
 static void move_car(const enum car_direction direction)
 {
-    switch (direction) {
-    case STANDBY:
-        motor_input_set(IN_1, 0);
-        motor_input_set(IN_2, 0);
-        motor_input_set(IN_3, 0);
-        motor_input_set(IN_4, 0);
-        break;
-    case BREAK:
-        motor_input_set(IN_1, 1);
-        motor_input_set(IN_2, 1);
-        motor_input_set(IN_3, 1);
-        motor_input_set(IN_4, 1);
-        break;
-    case FORWARD:
-        motor_input_set(IN_1, 1);
-        motor_input_set(IN_2, 0);
-        motor_input_set(IN_3, 1);
-        motor_input_set(IN_4, 0);
-        break;
-    case BACKWARD:
-        motor_input_set(IN_1, 0);
-        motor_input_set(IN_2, 1);
-        motor_input_set(IN_3, 0);
-        motor_input_set(IN_4, 1);
-        break;
-    case LEFT:
-        motor_input_set(IN_1, 0);
-        motor_input_set(IN_2, 1);
-        motor_input_set(IN_3, 1);
-        motor_input_set(IN_4, 0);
-        break;
-    case RIGHT:
-        motor_input_set(IN_1, 1);
-        motor_input_set(IN_2, 0);
-        motor_input_set(IN_3, 0);
-        motor_input_set(IN_4, 1);
-        break;
-    }
+    motor_input_set(IN_1, dir_table[direction][0]);
+    motor_input_set(IN_2, dir_table[direction][1]);
+    motor_input_set(IN_3, dir_table[direction][2]);
+    motor_input_set(IN_4, dir_table[direction][3]);
 }
