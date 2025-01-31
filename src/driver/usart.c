@@ -40,7 +40,7 @@ K_THREAD_DEFINE(usart_thread_id, CONFIG_USART_THREAD_STACK_SIZE, usart_thread,
 /**
  * @brief Holds the received char.
  */
-static unsigned char received[2];
+static unsigned char received[4];
 
 int usart_init(void)
 {
@@ -77,7 +77,7 @@ _Noreturn static void usart_thread(void *unused1, void *unused2, void *unused3)
         if (ret < 0) {
 
             if (ret == -1) {
-                received[0] = '0';
+                received[0] = '6';
                 received[1] = '\0';
             } else {
                 LOG_ERR("uart poll failed");
