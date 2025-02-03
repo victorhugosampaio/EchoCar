@@ -1,36 +1,58 @@
-void setup() {
-  Serial.begin(9600); /* Computer Serial. */
-  Serial1.begin(115200); /* UART. */
-}
+enum prediction {
+    PREDICTION_BACKWARD,
+    PREDICTION_FIVE,
+    PREDICTION_FORWARD,
+    PREDICTION_FOUR,
+    PREDICTION_GO,
+    PREDICTION_LEFT,
+    PREDICTION_NOISE,
+    PREDICTION_ONE,
+    PREDICTION_RIGHT,
+    PREDICTION_STOP,
+    PREDICTION_THREE,
+    PREDICTION_TWO,
 
-enum car_direction {
-    STANDBY,
-    BREAK,
-    FORWARD,
-    BACKWARD,
-    LEFT,
-    RIGHT,
+    PREDICTION_QUANTITY,
 };
 
-int currentDirection = STANDBY;
+const unsigned char chars[PREDICTION_QUANTITY] = {
+    [PREDICTION_BACKWARD] = 'a',
+    [PREDICTION_FIVE] = 'b',
+    [PREDICTION_FORWARD] = 'c',
+    [PREDICTION_FOUR] = 'd',
+    [PREDICTION_GO] = 'e',
+    [PREDICTION_LEFT] = 'f',
+    [PREDICTION_NOISE] = 'g',
+    [PREDICTION_ONE] = 'h',
+    [PREDICTION_RIGHT] = 'i',
+    [PREDICTION_STOP] = 'j',
+    [PREDICTION_THREE] = 'k',
+    [PREDICTION_TWO] = 'l',
+  };
+
 unsigned long previousMillis = 0;
-const unsigned long interval = 3000; /* Send each direction every 3 seconds. */
+const long interval = 3000; // 3 segundos
+
+void setup() {
+    Serial.begin(9600);
+    Serial1.begin(115200);
+}
 
 void loop() {
-  unsigned long currentMillis = millis();
-  Serial1.print(currentDirection); /* Send command via UART. */
+    unsigned long currentMillis = millis();
 
-  if (currentMillis - previousMillis >= interval) {
-    previousMillis = currentMillis;
-    Serial.print("Send: ");
-    Serial.println(currentDirection);
+    if (currentMillis - previousMillis >= interval) {
+        previousMillis = currentMillis;
 
-    currentDirection += 1;
+        static int index = 0;
+        Serial.println(chars[index]); // Print no Serial normal
+        Serial1.write(chars[index]); // Envio via Serial1
 
-    if (currentDirection > RIGHT) {
-      currentDirection = STANDBY;
+        index++;
+        if (index >= 12) {
+            index = 0;
+        }
     }
-  }
 
-  delay(100); /* UART delay. */
+    delay(100); // Necessário para a UART
 }
