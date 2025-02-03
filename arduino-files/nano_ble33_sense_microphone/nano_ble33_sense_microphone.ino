@@ -52,14 +52,10 @@ enum predictions {
 static size_t highest_value = 0;
 static size_t highest_prediction = NOISE;
 
-/**
- * @brief      Arduino setup function
- */
 void setup() {
   Serial.begin(115200);
-  Serial1.begin(115200); /* Initialize UART. */
+  Serial1.begin(115200);
 
-  //while (!Serial);
   Serial.println("Edge Impulse Inferencing Demo");
 
   // summary of inferencing settings (from model_metadata.h)
@@ -75,9 +71,6 @@ void setup() {
   }
 }
 
-/**
- * @brief      Arduino main function. Runs the inferencing loop.
- */
 void loop() {
   ei_printf("Recording...\n");
 
@@ -106,19 +99,19 @@ void loop() {
   ei_printf(": \n");
   for (size_t ix = 0; ix < EI_CLASSIFIER_LABEL_COUNT; ix++) {
     ei_printf("    %s: %.5f\n", result.classification[ix].label, result.classification[ix].value);
+    result.classification[ix].value = result.classification[ix].value * 100;
 
-    if (result.classification[ix].value * 100 > highest_value) {
-      highest_value = result.classification[ix].value * 100;
+    if (result.classification[ix].value > highest_value) {
+      highest_value = result.classification[ix].value;
       highest_prediction = ix;
     }
   }
 
-  Serial1.print(highest_prediction); /* Send highest prediction via UART. */
+  Serial1.write(highest_prediction + 'a'); /* Send highest prediction via UART. */
   Serial.print("Sent: ");
   Serial.println(highest_prediction);
 
   highest_value = 0;
-  //highest_prediction = NOISE;
 
   delay(100); /* UART delay. */
 }

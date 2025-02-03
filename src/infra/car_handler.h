@@ -27,6 +27,19 @@ enum car_direction {
 };
 
 /**
+ * @brief Enumerate the delays.
+ */
+enum car_delay {
+    DELAY_ONE,
+    DELAY_TWO,
+    DELAY_THREE,
+    DELAY_FOUR,
+    DELAY_FIVE,
+
+    DELAY_QUANTITY,
+};
+
+/**
  * @brief Enumerate the model predictions.
  */
 enum prediction {
