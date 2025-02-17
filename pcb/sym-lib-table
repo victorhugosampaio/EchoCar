@@ -1,0 +1,4 @@
+(sym_lib_table
+  (version 7)
+  (lib (name "MX1616H_symbol")(type "KiCad")(uri "${KIPRJMOD}/MX1616H_SMD.pretty/MX1616H_symbol.kicad_sym")(options "")(descr ""))
+)
