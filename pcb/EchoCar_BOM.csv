@@ -1,0 +1,19 @@
+Reference,Value,Link,Footprint,Qty
+C1,10u,https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_Murata-Electronics-GRM21BR61H106KE43L_C440198.html?s_z=n_capacitor%2010u%200805,Capacitor_SMD:C_0805_2012Metric,1
+"C2,C3,C4,C5,C6,C7",100n,https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_TDK-C1005X7R1H104KT000F_C361198.html?s_z=n_capacitor%20100n%200402,Capacitor_SMD:C_0402_1005Metric,6
+"C8,C9",10p,https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_TDK-CGA2B2NP01H100DT0Y0F_C694492.html?s_z=n_capacitor%2010p%200402,Capacitor_SMD:C_0402_1005Metric,2
+"C10,C11",22u,https://www.lcsc.com/product-detail/Multilayer-Ceramic-Capacitors-MLCC-SMD-SMT_Samsung-Electro-Mechanics-CL21A226MAQNNNE_C45783.html?s_z=n_capacitor%2022u%200805,Capacitor_SMD:C_0805_2012Metric,2
+"C12,C13",47u 16V,https://www.lcsc.com/product-detail/Aluminum-Electrolytic-Capacitors-SMD_AISHI-Aihua-Group-EMK1CM470E61D00R_C5289725.html?s_z=n_capacitor%2047u%2016V%20D5.0XH5.5,Capacitor_SMD:CP_Elec_5x5.3,2
+D1,PWR_ON,https://www.lcsc.com/product-detail/LED-Indication-Discrete_Foshan-NationStar-Optoelectronics-NCD0603W3_C158100.html?s_z=n_led%200603,LED_SMD:LED_0603_1608Metric,1
+D2,BZV55B5V1,https://www.lcsc.com/product-detail/Zener-Diodes_EIC-Semicon-BZV55B5V1_C2978889.html?s_z=n_BZV55B5V1,Diode_SMD:D_MiniMELF,1
+J1,SW,x,Connector_PinHeader_2.54mm:PinHeader_1x04_P2.54mm_Vertical,1
+J2,Display_Con,x,Connector_PinSocket_1.00mm:PinSocket_1x07_P2.54mm_Vertical,1
+J3,Arduino_con,x,Connector_PinHeader_2.54mm:PinHeader_1x03_P2.54mm_Vertical,1
+R1,10k,https://www.lcsc.com/product-detail/Chip-Resistor-Surface-Mount_Vishay-Intertech-RCS040210K0FKED_C3020235.html?s_z=n_resistor%2010k%200402,Resistor_SMD:R_0402_1005Metric,1
+R2,1k,https://www.lcsc.com/product-detail/Chip-Resistor-Surface-Mount_UNI-ROYAL-Uniroyal-Elec-CQ02WGJ0102TCE_C2770748.html?s_z=n_resistor%201k%200402,Resistor_SMD:R_0402_1005Metric,1
+R3,220,https://www.lcsc.com/product-detail/Chip-Resistor-Surface-Mount_RALEC-RTT022200FTH_C102889.html?s_z=n_resistor%20220%200402,Resistor_SMD:R_0402_1005Metric,1
+SW1,SW_SPDT,https://www.lcsc.com/product-detail/Slide-Switches_XKB-Connection-SK12D07L3B_C480339.html?s_z=n_SW%20SPDT,Button_Switch_THT:SW_E-Switch_EG1224_SPDT_Angled,1
+U1,STM32F103C8T6,https://www.lcsc.com/product-detail/Microcontrollers-MCU-MPU-SOC_STMicroelectronics-STM32F103C8T6_C8734.html?s_z=n_STM32F103C8T6,Package_QFP:LQFP-48_7x7mm_P0.5mm,1
+U2,AMS1117-3.3,https://www.lcsc.com/product-detail/Voltage-Regulators-Linear-Low-Drop-Out-LDO-Regulators_UMW-Youtai-Semiconductor-Co-Ltd-AMS1117-3-3_C347222.html?s_z=n_AMS1117-3.3,Package_TO_SOT_SMD:SOT-223-3_TabPin2,1
+U3,MX1616H,https://www.lcsc.com/product-detail/Brushed-DC-Motor-Drivers_Mixic-MX1616H_C5119044.html?s_z=n_MX1616H,MX1616H_SMD:MX1616H,1
+Y1,16MHz,https://www.lcsc.com/product-detail/Crystals_Shenzhen-SCTF-Elec-SX3B16-000F0910F30_C2901667.html?s_z=n_Crystal%20SMD%203225,Crystal:Crystal_SMD_3225-4Pin_3.2x2.5mm,1
