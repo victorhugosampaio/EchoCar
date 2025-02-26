@@ -24,6 +24,6 @@ int usart_init(void);
  *
  * @return Received char.
  */
-unsigned char *get_char(void);
+unsigned char *usart_get_char(void);
 
 #endif /* USART_H */

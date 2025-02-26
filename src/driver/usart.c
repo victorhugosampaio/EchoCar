@@ -57,7 +57,7 @@ int usart_init(void)
     return 0;
 }
 
-unsigned char *get_char(void)
+unsigned char *usart_get_char(void)
 {
     return received;
 }
@@ -77,7 +77,7 @@ _Noreturn static void usart_thread(void *unused1, void *unused2, void *unused3)
         if (ret < 0) {
 
             if (ret == -1) {
-                received[0] = '0';
+                received[0] = 'g';
                 received[1] = '\0';
             } else {
                 LOG_ERR("uart poll failed");

@@ -14,12 +14,18 @@
 #include "driver/motor.h"
 #include "driver/usart.h"
 
+#include <stdlib.h>
 #include <zephyr/kernel.h>
 
 /**
  * @brief Car handler thread.
  */
 _Noreturn static void car_handler_thread();
+
+/**
+ * @brief Car moving timer callback.
+ */
+static void car_moving_timer_cb();
 
 /**
  * @brief Move the car in the desired direction.
@@ -35,15 +41,31 @@ K_THREAD_DEFINE(car_handler_thread_id, CONFIG_CAR_HANDLER_THREAD_STACK_SIZE, car
                 NULL, NULL, NULL, CONFIG_CAR_HANDLER_THREAD_PRIORITY, K_ESSENTIAL, 0);
 
 /**
+ * @brief Create the car moving timer.
+ */
+K_TIMER_DEFINE(car_moving_timer, car_moving_timer_cb, NULL);
+
+/**
  * @brief LUT with the directions strings.
  */
 static const char *directions[DIRECTION_QUANTITY] = {
-    [DIRECTION_STANDBY] = "STANDBY",
-    [DIRECTION_BREAK] = "BREAK",
-    [DIRECTION_FORWARD] = "FORWARD",
-    [DIRECTION_BACKWARD] = "BACKWARD",
-    [DIRECTION_LEFT] = "LEFT",
-    [DIRECTION_RIGHT] = "RIGHT",
+    [DIRECTION_STANDBY] = "Standby\n",
+    [DIRECTION_BREAK] = "Break\n",
+    [DIRECTION_FORWARD] = "Forward\n",
+    [DIRECTION_BACKWARD] = "Backward\n",
+    [DIRECTION_LEFT] = "Left\n",
+    [DIRECTION_RIGHT] = "Right\n",
+};
+
+/**
+ * @brief LUT with the delay strings.
+ */
+static const char *delays[DELAY_QUANTITY] = {
+    [DELAY_ONE] = "1",
+    [DELAY_TWO] = "2",
+    [DELAY_THREE] = "3",
+    [DELAY_FOUR] = "4",
+    [DELAY_FIVE] = "5",
 };
 
 /**
@@ -58,36 +80,117 @@ static const uint8_t dir_table[DIRECTION_QUANTITY][IN_QUANTITY] = {
     [DIRECTION_RIGHT] = {1, 0, 0, 1},
 };
 
+static struct car_handler
+{
+    enum car_direction direction;
+    uint8_t counter;
+    bool available;
+    bool moving;
+} self = {
+    .direction = DIRECTION_STANDBY,
+    .counter = 0,
+    .available = false,
+    .moving = false,
+};
+
 _Noreturn static void car_handler_thread()
 {
-    enum car_direction current_direction = DIRECTION_STANDBY;
-    enum car_direction last_direction = current_direction;
+    uint8_t prediction;
+
+    k_timer_start(&car_moving_timer, K_NO_WAIT, K_SECONDS(1));
 
     while (true) {
-        current_direction = get_char()[0] - '0';
+        prediction = usart_get_char()[0] - 'a';
 
-        switch (current_direction) {
-        case DIRECTION_STANDBY:
-        case DIRECTION_BREAK:
-        case DIRECTION_FORWARD:
-        case DIRECTION_BACKWARD:
-        case DIRECTION_LEFT:
-        case DIRECTION_RIGHT:
-            move_car(current_direction);
-            last_direction = current_direction;
-            display_add_string("Moving:\n");
-            display_add_string(directions[current_direction]);
-            break;
+        if (self.available) {
+            if (self.direction == DIRECTION_STANDBY) {
+                switch (prediction) {
+                case PREDICTION_BACKWARD:
+                    self.direction = DIRECTION_BACKWARD;
+                    break;
+                case PREDICTION_FORWARD:
+                    self.direction = DIRECTION_FORWARD;
+                    break;
+                case PREDICTION_LEFT:
+                    self.direction = DIRECTION_LEFT;
+                    break;
+                case PREDICTION_RIGHT:
+                    self.direction = DIRECTION_RIGHT;
+                    break;
+                default:
+                    display_add_string("Waiting\nDirection");
+                    break;
+                }
+            } else if (self.counter == 0) {
+                switch (prediction) {
+                case PREDICTION_ONE:
+                    self.counter = 1;
+                    break;
+                case PREDICTION_TWO:
+                    self.counter = 2;
+                    break;
+                case PREDICTION_THREE:
+                    self.counter = 3;
+                    break;
+                case PREDICTION_FOUR:
+                    self.counter = 4;
+                    break;
+                case PREDICTION_FIVE:
+                    self.counter = 5;
+                    break;
+                default:
+                    display_add_string("Direction:\n");
+                    display_add_string(directions[self.direction]);
+                    display_add_string("\n");
+                    display_add_string("Waiting delay");
+                    break;
+                }
+            } else {
+                self.available = false;
+                self.moving = true;
 
-        default:
-            if (last_direction == DIRECTION_STANDBY) {
-                continue;
+                display_add_string("Starting!\n");
+                display_add_string("\n");
+                display_add_string("Direction:\n");
+                display_add_string(directions[self.direction]);
+                display_add_string("\n");
+                display_add_string(directions[self.counter]);
             }
 
-            last_direction = DIRECTION_STANDBY;
-            move_car(DIRECTION_STANDBY);
-            display_add_string("Waiting...");
-            break;
+            display_print();
+        } else {
+            if (prediction == PREDICTION_STOP) {
+                self.moving = false;
+            }
+
+            if (prediction == PREDICTION_GO) {
+                self.moving = true;
+            }
+        }
+    }
+}
+
+static void car_moving_timer_cb()
+{
+    if (self.available == false) {
+        if (self.counter == 0) {
+            self.moving = false;
+            self.direction = DIRECTION_STANDBY;
+            move_car(self.direction);
+            self.available = true;
+
+        } else if (self.moving) {
+            display_add_string("Moving:\n");
+            display_add_string(directions[self.direction]);
+            display_add_string("\n");
+            display_add_string("Remaining:\n");
+            display_add_string(delays[self.counter - 1]);
+
+            self.counter--;
+            move_car(self.direction);
+        } else {
+            display_add_string("STOPPED!\n");
+            move_car(DIRECTION_BREAK);
         }
 
         display_print();
