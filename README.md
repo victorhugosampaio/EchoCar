@@ -4,7 +4,7 @@ Hi there, my name is Victor. I'm an undergraduate computer engineering student, 
 
 I used two microcontrollers: a Bluepill (STM32F103C8T6) to control the hardware itself and an Arduino Nano 33 BLE Sense to run the AI model. I chose to use Zephyr as the RTOS to operate the system. To create and train the AI model and deploy it to the Arduino Nano microcontroller, I used Edge Impulse. I also used it to edit some audio data to fit within the 1-second window for training the model.
 
-I used the Pete Warden voice dataset as the AI databse.
+I used the Pete Warden voice dataset as the AI databse. The files used in this project can be accessed [here](https://drive.google.com/file/d/17HAxpKHDkPuj7wIeOMZ8yrCH6MHIF1b3/view?usp=sharing).
 
 ## Getting Started
 
