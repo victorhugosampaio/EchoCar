@@ -154,7 +154,7 @@ _Noreturn static void car_handler_thread()
                 display_add_string("Direction:\n");
                 display_add_string(directions[self.direction]);
                 display_add_string("\n");
-                display_add_string(directions[self.counter]);
+                display_add_string(delays[self.counter - 1]);
             }
 
             display_print();
