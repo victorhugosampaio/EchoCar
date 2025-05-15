@@ -56,5 +56,5 @@ For the Arduino firmware, install the EchoCar_inferencing.rar library in the Ard
 * **Victor Hugo Sampaio**
 
 ## Video
-YouTube [link](https://youtu.be/g0hY5GN6AXw).
+YouTube [link](https://youtu.be/iiWRqvPNBO4).
 
