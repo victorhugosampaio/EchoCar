@@ -1,6 +1,6 @@
 # EchoCar
 
-Hi there, my name is Victor. I'm an undergraduate computer engineering student, currently working as a firmware trainee engineer. The EchoCar is my final paper project for college.
+Hi there, my name is Victor. I'm an ~~undergraduate~~ graduated computer engineer, currently working as a firmware trainee engineer. The EchoCar is my final paper project for college.
 
 I used two microcontrollers: a Bluepill (STM32F103C8T6) to control the hardware itself and an Arduino Nano 33 BLE Sense to run the AI model. I chose to use Zephyr as the RTOS to operate the system. To create and train the AI model and deploy it to the Arduino Nano microcontroller, I used Edge Impulse. I also used it to edit some audio data to fit within the 1-second window for training the model.
 
